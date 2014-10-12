@@ -1,9 +1,13 @@
 library(testthat)
+library(devtools)
+
+#Source all scripts in R 
+load_all() 
 
 tmpFile <- tempfile()
 
 sink(tmpFile)
-test_dir("tests", reporter="tap")
+test_dir("inst/tests", reporter="tap")
 sink()
 
 con <- file(tmpFile, "r")
