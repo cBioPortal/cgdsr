@@ -380,7 +380,6 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
   
 })
 
-
 setMethodS3("test","CGDS", function(x, ...) {
   checkEq = function(a,b) { if (identical(a,b)) "OK\n" else "FAILED!\n" }
   checkGrt = function(a,b) { if (a > b) "OK\n" else "FAILED!\n" }
@@ -388,7 +387,7 @@ setMethodS3("test","CGDS", function(x, ...) {
   cat('getCancerStudies... ',
       checkEq(colnames(cancerstudies),c("cancer_study_id","name","description")))
   ct = cancerstudies[2,1] # should be row 1 instead ...
-
+  
   cat('getCaseLists (1/2) ... ',
       checkEq(colnames(getCaseLists(x,ct)),
               c("case_list_id","case_list_name",
@@ -396,7 +395,7 @@ setMethodS3("test","CGDS", function(x, ...) {
   cat('getCaseLists (2/2) ... ',
       checkEq(colnames(getCaseLists(x,'xxx')),
               'Error..Problem.when.identifying.a.cancer.study.for.the.request.'))
-
+  
   cat('getGeneticProfiles (1/2) ... ',
       checkEq(colnames(getGeneticProfiles(x,ct)),
               c("genetic_profile_id","genetic_profile_name","genetic_profile_description",
@@ -404,7 +403,7 @@ setMethodS3("test","CGDS", function(x, ...) {
   cat('getGeneticProfiles (2/2) ... ',
       checkEq(colnames(getGeneticProfiles(x,'xxx')),
               'Error..Problem.when.identifying.a.cancer.study.for.the.request.'))
-
+  
   # clinical data
   # check colnames
   cat('getClinicalData (1/1) ... ',
