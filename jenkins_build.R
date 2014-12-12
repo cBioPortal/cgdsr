@@ -69,7 +69,8 @@ while(length(line <- readLines(con, n=1)) > 0) {
         firstMultiLine <- FALSE
       } else {
         #writeLines(line, con=outFile) 
-        tmp <- paste0(tmp, line, "\n")                
+        # Ignore multiple lines (HACK)
+        #tmp <- paste0(tmp, line, "\n")                
       }
     }
   }
