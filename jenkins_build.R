@@ -45,7 +45,6 @@ while(length(line <- readLines(con, n=1)) > 0) {
   }  
   
   if(startTap) {  
-    
     # Check for the end of the multiline
     if(startMultiLine && grepl("^[ok|#]", line)) {
       #writeLines("  ...", con=outFile)     
@@ -69,8 +68,7 @@ while(length(line <- readLines(con, n=1)) > 0) {
         firstMultiLine <- FALSE
       } else {
         #writeLines(line, con=outFile) 
-        # Ignore multiple lines (HACK)
-        #tmp <- paste0(tmp, line, "\n")                
+        tmp <- paste0(tmp, line, "\n")                
       }
     }
   }
