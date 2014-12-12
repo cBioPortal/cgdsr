@@ -62,7 +62,7 @@ while(length(line <- readLines(con, n=1)) > 0) {
       if(firstMultiLine) {
         #writeLines(line, con=outFile) 
         line <- gsub(":", "", line)
-        tmp <- paste0(tmp, line, ":\n")       
+        tmp <- paste0(tmp, line, "\n")       
         firstMultiLine <- FALSE
       } else {
         #writeLines(line, con=outFile) 
