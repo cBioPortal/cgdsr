@@ -1,5 +1,13 @@
-library(testthat)
+setRepositories(ind=1:6)
+
+if (!("devtools" %in% installed.packages())) install.packages("devtools")
+if (!("testthat" %in% installed.packages())) install.packages("testthat")
+
 library(devtools)
+
+install_deps(".")
+
+library(testthat)
 
 #Source all scripts in R 
 load_all() 
@@ -53,6 +61,7 @@ while(length(line <- readLines(con, n=1)) > 0) {
       # Check for the first line of the multiline 
       if(firstMultiLine) {
         #writeLines(line, con=outFile) 
+        line <- gsub(":", "", line)
         tmp <- paste0(tmp, line, ":\n")       
         firstMultiLine <- FALSE
       } else {
