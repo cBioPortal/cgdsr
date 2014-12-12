@@ -61,8 +61,11 @@ while(length(line <- readLines(con, n=1)) > 0) {
       # Check for the first line of the multiline 
       if(firstMultiLine) {
         #writeLines(line, con=outFile) 
+        # Remove any existing trailing colon that corrupts YAML format
         line <- gsub(":", "", line)
-        tmp <- paste0(tmp, line, "\n")       
+        # Trim trailing space 
+        line <- gsub(" $", "", line)
+        tmp <- paste0(tmp, line, ":\n")       
         firstMultiLine <- FALSE
       } else {
         #writeLines(line, con=outFile) 
