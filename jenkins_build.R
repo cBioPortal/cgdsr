@@ -64,7 +64,7 @@ while(length(line <- readLines(con, n=1)) > 0) {
         line <- gsub(":", "", line)
         # Trim trailing space 
         line <- gsub(" $", "", line)
-        tmp <- paste0(tmp, line, ":\n")       
+        tmp <- paste0(tmp, line, ": ")       
         firstMultiLine <- FALSE
       } else {
         #writeLines(line, con=outFile) 
