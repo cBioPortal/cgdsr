@@ -34,8 +34,7 @@ test_that("getGeneticProfiles", {
 test_that("getClinicalData", {
   mycgds <- CGDS("http://www.cbioportal.org/public-portal/")  
   
-  expect_identical(colnames(getClinicalData(mycgds,'gbm_tcga_all'))[1],
-                   c("DFS_MONTHS"))
+  expect_true("DFS_MONTHS" %in% colnames(getClinicalData(mycgds,'gbm_tcga_all')))
 })
 
 test_that("getProfileData", {
@@ -54,8 +53,8 @@ test_that("getProfileData", {
                    c('gbm_tcga_mrna','gbm_tcga_mutations'))
 
   # check 3 cases returns matrix with 3 columns
-  expect_identical(rownames(getProfileData(mycgds,'BRCA1','gbm_tcga_mrna',cases=c('TCGA-02-0001','TCGA-02-0003'))),
-                   make.names(c('TCGA-02-0001','TCGA-02-0003')))
+  expect_identical(rownames(getProfileData(mycgds,'BRCA1','gbm_tcga_mrna',cases=c('TCGA-02-0001-01','TCGA-02-0003-01'))),
+                   make.names(c('TCGA-02-0001-01','TCGA-02-0003-01')))
   
   # invalid gene names return empty data.frame
   expect_identical(nrow(getProfileData(mycgds,c('NF10','NF11'),'gbm_tcga_mrna','gbm_tcga_all')),as.integer(0))
