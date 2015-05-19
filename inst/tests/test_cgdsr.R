@@ -34,7 +34,7 @@ test_that("getGeneticProfiles", {
 test_that("getClinicalData", {
   mycgds <- CGDS("http://www.cbioportal.org/public-portal/")  
   
-  expect_false("DFS_MONTHS" %in% colnames(getClinicalData(mycgds,'gbm_tcga_all')))
+  expect_true("DFS_MONTHS" %in% colnames(getClinicalData(mycgds,'gbm_tcga_all')))
 })
 
 test_that("getProfileData", {
