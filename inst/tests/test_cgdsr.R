@@ -31,6 +31,13 @@ test_that("getGeneticProfiles", {
                    'Error..Problem.when.identifying.a.cancer.study.for.the.request.')
 })
 
+test_that("getMutationData", {
+  mycgds <- CGDS("http://www.cbioportal.org/public-portal/")  
+
+  # AURKB has not mutation data
+  expect_equal(nrow(getMutationData(mycgds,'lusc_tcga_pub_sequenced','lusc_tcga_pub_mutations','AURKB')), 0) 
+})
+
 test_that("getClinicalData", {
   mycgds <- CGDS("http://www.cbioportal.org/public-portal/")  
   
