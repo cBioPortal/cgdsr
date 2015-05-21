@@ -6,7 +6,7 @@ Date: 2015-05-19
 Author: Anders Jacobsen <jacobsen@cbio.mskcc.org>
 Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
 Description: The package provides a basic set of R functions for querying the Cancer Genomics Data Server (CGDS), hosted by the Computational Biology Center at Memorial-Sloan-Kettering Cancer Center (MSKCC).
-License: GPL
+License: LGPL-3
 LazyLoad: yes
 URL: http://www.cbioportal.org/
 Depends: R (>= 2.12.0)
