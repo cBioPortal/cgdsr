@@ -45,7 +45,6 @@ setMethodS3("getMutationData","CGDS", function(x, caseList, geneticProfile, gene
     "&case_set_id=", caseList,
     "&genetic_profile_id=", geneticProfile,
     "&gene_list=", paste(genes,collapse=","), sep="")
-  cat("url:", url, "\n")
   df = processURL(x,url)
   return(df)
 })
