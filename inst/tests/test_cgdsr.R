@@ -1,14 +1,14 @@
 context("GGDSR Tests")
 
 test_that("getCancerStudies", {
-  mycgds <- CGDS("http://www.cbioportal.org/public-portal/")
+  mycgds <- CGDS("http://www.cbioportal.org/")
 
   cancerstudies <- getCancerStudies(mycgds)
   expect_identical(colnames(cancerstudies), c("cancer_study_id","name","description"))
 })
 
 test_that("getCaseLists", {
-  mycgds <- CGDS("http://www.cbioportal.org/public-portal/")  
+  mycgds <- CGDS("http://www.cbioportal.org/")  
   cancerstudies <- getCancerStudies(mycgds)
   ct <- cancerstudies[2,1] # should be row 1 instead ...
 
@@ -19,7 +19,7 @@ test_that("getCaseLists", {
 })
 
 test_that("getGeneticProfiles", {
-  mycgds <- CGDS("http://www.cbioportal.org/public-portal/")  
+  mycgds <- CGDS("http://www.cbioportal.org/")  
   cancerstudies <- getCancerStudies(mycgds)
   ct <- cancerstudies[2,1] # should be row 1 instead ...
   
@@ -32,20 +32,20 @@ test_that("getGeneticProfiles", {
 })
 
 test_that("getMutationData", {
-  mycgds <- CGDS("http://www.cbioportal.org/public-portal/")  
+  mycgds <- CGDS("http://www.cbioportal.org/")  
 
   # AURKB has not mutation data
   expect_equal(nrow(getMutationData(mycgds,'lusc_tcga_pub_sequenced','lusc_tcga_pub_mutations','AURKB')), 0) 
 })
 
 test_that("getClinicalData", {
-  mycgds <- CGDS("http://www.cbioportal.org/public-portal/")  
+  mycgds <- CGDS("http://www.cbioportal.org/")  
   
   expect_true("DFS_MONTHS" %in% colnames(getClinicalData(mycgds,'gbm_tcga_all')))
 })
 
 test_that("getProfileData", {
-  mycgds <- CGDS("http://www.cbioportal.org/public-portal/")  
+  mycgds <- CGDS("http://www.cbioportal.org/")  
 
   # check one gene, one profile
   expect_identical(colnames(getProfileData(mycgds,'NF1','gbm_tcga_mrna','gbm_tcga_all')),

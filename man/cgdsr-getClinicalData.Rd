@@ -35,7 +35,7 @@ usually indicated as "DiseaseFree" or "Recurred/Progressed".
 }
 \examples{
 # Create CGDS object
-mycgds = CGDS("http://www.cbioportal.org/public-portal/")
+mycgds = CGDS("http://www.cbioportal.org/")
 
 getCancerStudies(mycgds)
 

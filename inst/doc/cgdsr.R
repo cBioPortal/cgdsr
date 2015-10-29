@@ -5,7 +5,7 @@
 ###################################################
 library(cgdsr)
 # Create CGDS object
-mycgds = CGDS("http://www.cbioportal.org/public-portal/")
+mycgds = CGDS("http://www.cbioportal.org/")
 
 
 ###################################################

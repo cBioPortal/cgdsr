@@ -14,14 +14,14 @@
 <jacobsen@cbio.mskcc.org>
 }
 \references{
- cBio Cancer Genomics Portal: \url{http://www.cbioportal.org/public-portal/}
+ cBio Cancer Genomics Portal: \url{http://www.cbioportal.org/}
 }
 \seealso{
 \code{\link{cgdsr}},\code{\link{CGDS}}
 }
 \examples{
 # Create CGDS object
-mycgds = CGDS("http://www.cbioportal.org/public-portal/")
+mycgds = CGDS("http://www.cbioportal.org/")
 
 getCancerStudies(mycgds)
 

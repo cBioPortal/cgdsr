@@ -1,15 +1,31 @@
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# IMPORTS
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# ---- IMPORTS ----
 # Packages to be imported
 import("R.methodsS3","R.oo")
 
 # Object that must exported explicitly
 
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# EXPORTS
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# ---- EXPORTS ----
 # Export all public methods, that is, those without a preceeding dot
 # in their names.
 exportPattern("^[^\\.]")
+
+
+# ---- PACKAGE IMPORTS ----
+importFrom("graphics", "axis", "barplot", "box", "boxplot", "hist", "legend", 
+           "plot", "plot.new", "points", "stripchart", "text")
+importFrom("stats", "cor.test")
+importFrom("utils", "read.table")
+
+# ---- S3 REGISTRATION ----
+S3method(getCancerStudies, CGDS)
+S3method(getCaseLists, CGDS)
+S3method(getGeneticProfiles, CGDS)
+S3method(getMutationData, CGDS)
+S3method(getProfileData, CGDS)
+S3method(getClinicalData, CGDS)
+S3method(plot, CGDS)
+S3method(processURL, CGDS)
+S3method(setPlotErrorMsg, CGDS)
+S3method(setVerbose, CGDS)
+S3method(test, CGDS)

@@ -42,7 +42,7 @@ case IDs.
 }
 \examples{
 # Create CGDS object
-mycgds = CGDS("http://www.cbioportal.org/public-portal/")
+mycgds = CGDS("http://www.cbioportal.org/")
 
 # Get list of cancer studies at server
 getCancerStudies(mycgds)
@@ -52,7 +52,7 @@ mycancerstudy = getCancerStudies(mycgds)[2,1]
 mycaselist = getCaseLists(mycgds,mycancerstudy)[1,1]
 
 # Get available genetic profiles
-mygeneticprofile = getGeneticProfiles(mycgds,mycancerstudy)[4,1]
+mygeneticprofile = getGeneticProfiles(mycgds,mycancerstudy)[1,1]
 
 # Get data slices for a specified list of genes, genetic profile and case list
 getProfileData(mycgds,c('BRCA1','BRCA2'),mygeneticprofile,mycaselist)
@@ -61,10 +61,10 @@ getProfileData(mycgds,c('BRCA1','BRCA2'),mygeneticprofile,mycaselist)
 getProfileData(mycgds,'HMGA2',mygeneticprofile,mycaselist)
 
 # Get data slice for multiple genetic profiles and single gene
-getProfileData(mycgds,'HMGA2',getGeneticProfiles(mycgds,mycancerstudy)[c(3,4),1],mycaselist)
+getProfileData(mycgds,'HMGA2',getGeneticProfiles(mycgds,mycancerstudy)[c(1,2),1],mycaselist)
 
 # Get the same dataset from a vector of case IDs
 cases = unlist(strsplit(getCaseLists(mycgds,mycancerstudy)[1,'case_ids'],' '))
-getProfileData(mycgds,'HMGA2',getGeneticProfiles(mycgds,mycancerstudy)[c(3,4),1],cases=cases)
+getProfileData(mycgds,'HMGA2',getGeneticProfiles(mycgds,mycancerstudy)[c(1,2),1],cases=cases)
 
 }

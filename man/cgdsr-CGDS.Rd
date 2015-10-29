@@ -22,7 +22,7 @@
 }
 \examples{
 # Create CGDS object
-mycgds = CGDS("http://www.cbioportal.org/public-portal/")
+mycgds = CGDS("http://www.cbioportal.org/")
 
 # Test the CGDS endpoint URL using a few simple API tests
 test(mycgds) 

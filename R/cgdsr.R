@@ -409,7 +409,7 @@ setMethodS3("test","CGDS", function(x, ...) {
   # clinical data
   # check colnames
   cat('getClinicalData (1/1) ... ',
-      checkTrue("DFS_MONTHS" %in% colnames(getClinicalData(mycgds,'gbm_tcga_all'))))
+      checkTrue("DFS_MONTHS" %in% colnames(getClinicalData(x,'gbm_tcga_all'))))
   
   # check one gene, one profile
   cat('getProfileData (1/6) ... ',
