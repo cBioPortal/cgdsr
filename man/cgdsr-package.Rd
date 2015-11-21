@@ -11,7 +11,7 @@ The package provides a basic set of R functions for querying the Cancer
 Genomics Data Server (CGDS), hosted by the Computational Biology Center
 at Memorial-Sloan-Kettering Cancer Center (MSKCC). Read more about this
 service at the cBio Cancer Genomics Portal,
-\url{http://www.cbioportal.org/public-portal/}.
+\url{http://www.cbioportal.org/}.
 }
 \details{
 \tabular{ll}{
@@ -59,7 +59,7 @@ survival time and age) for a given case list.
 
 \examples{
 # Create CGDS object
-mycgds = CGDS("http://www.cbioportal.org/public-portal/")
+mycgds = CGDS("http://www.cbioportal.org/")
 
 # Test the CGDS endpoint URL using a few simple API tests
 test(mycgds) 

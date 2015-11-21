@@ -65,12 +65,12 @@ function.
 Initially, we will establish a connection to the public CGDS
 server hosted by Memorial Sloan-Kettering Cancer Center. The function
 for creating a CGDS connection object requires the URL of the CGDS
-server service, in this case \url{http://www.cbioportal.org/public-portal/}, as an argument.
+server service, in this case \url{http://www.cbioportal.org/}, as an argument.
 
 <<>>=
 library(cgdsr)
 # Create CGDS object
-mycgds = CGDS("http://www.cbioportal.org/public-portal/")
+mycgds = CGDS("http://www.cbioportal.org/")
 @
 
 The variable \texttt{mycgds} is now a CGDS connection object

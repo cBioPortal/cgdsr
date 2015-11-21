@@ -48,7 +48,7 @@ view within the Mutation Assessor web site.
 }
 \examples{
 # Create CGDS object
-mycgds = CGDS("http://www.cbioportal.org/public-portal/")
+mycgds = CGDS("http://www.cbioportal.org/")
 
 getCancerStudies(mycgds)
 
