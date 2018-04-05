@@ -1,5 +1,9 @@
 library(R.oo);
 
+.onAttach <- function(libname, pkgname){
+    packageStartupMessage('Please send questions to cbioportal@googlegroups.com')
+}
+
 setConstructorS3("CGDS", function(url='',verbose=FALSE,ploterrormsg='') {
   extend(Object(), "CGDS",
          .url=url,
@@ -9,7 +13,7 @@ setConstructorS3("CGDS", function(url='',verbose=FALSE,ploterrormsg='') {
 
 setMethodS3("processURL","CGDS", private=TRUE, function(x, url, ...) {
   if (x$.verbose) cat(url,"\n")
-  df = read.table(url, skip=0, header=TRUE, as.is=TRUE, sep="\t",quote='') 
+  df = read.table(url, skip=0, header=TRUE, as.is=TRUE, sep="\t",quote='',comment.char='')
 })
 
 setMethodS3("setPlotErrorMsg","CGDS", function(x, msg, ...) {
@@ -59,11 +63,11 @@ setMethodS3("getProfileData","CGDS", function(x, genes, geneticProfiles, caseLis
   if (length(cases)>0) { url = paste(url,"&case_list=", paste(cases,collapse=","),sep='')
   } else if (caseIdsKey != '') { url = paste(url,"&case_ids_key=", caseIdsKey,sep='')
   } else { url = paste(url,"&case_set_id=", caseList,sep='') }
-  
+
   df = processURL(x,url)
-  
+
   if (nrow(df) == 0) { return(df) }
-  
+
   m = matrix()
   # process data before returning
   if (length(geneticProfiles) > 1) {
@@ -75,7 +79,7 @@ setMethodS3("getProfileData","CGDS", function(x, genes, geneticProfiles, caseLis
     m = t(df[,-c(1:2)])
     colnames(m) = cnames
   }
-  
+
   return(data.frame(m))
 })
 
@@ -105,17 +109,17 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
     box()
     return(msg)
   }
-    
+
   # we only allow the following combinations
   # a) gene1 (1 profile)  # b) gene1 vs gene2 (1 profile)
   # c) profile 1 vs profile 2 (1 gene)
   if((length(genes) > 1 & length(geneticProfiles) > 1) | (length(genes) > 2 | length(geneticProfiles) > 2)) {
     return(errormsg("use only 2 genetic profiles OR 2 genes"))
   }
-  
+
   # make genenames conform to R variable names
   genesR = make.names(genes)
-  
+
   # get data, check more than zero rows returned, otherwise return
   df = getProfileData(x, genes, geneticProfiles, caseList, cases, caseIdsKey)
   if (nrow(df) == 0) { return(errormsg(paste('empty data frame returned :\n',colnames(df)[1]))) }
@@ -123,7 +127,7 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
   # check data returned with more than two genes or genetic profiles
   if (length(genes) == 2 & ncol(df) != 2) { return(errormsg(paste("gene not found:", setdiff(genesR,colnames(df))))) }
   if (length(geneticProfiles) == 2 & ncol(df) != 2) { return(errormsg("geneticProfile ID not found:", setdiff(geneticProfiles,colnames(df)))) }
-  
+
   # get geneticProfiles annotation for axis labels
   gps = getGeneticProfiles(x, cancerStudy)
   if (nrow(gps) == 0) { errormsg(colnames(gps[1])) }
@@ -146,11 +150,11 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
 
   # set sub title with correlation if specified
   plot.subtitle = ''
-  if ((add.corr == 'pearson'  | add.corr == 'spearman') & ncol(df) == 2) {    
+  if ((add.corr == 'pearson'  | add.corr == 'spearman') & ncol(df) == 2) {
     ct = cor.test(df[,1],df[,2],method=add.corr)
     plot.subtitle = paste(add.corr, ' r = ', sprintf("%.2f",ct$estimate), ', p = ',sprintf("%.1e",ct$p.value))
   }
-  
+
   ###
   ### Skins
   ###
@@ -168,7 +172,7 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
       gpb = geneticProfiles[2]
       plot(df[,gpa],df[,gpb] , main = '', xlab = paste(genes[1],", ",gpaxisnames[gpa],sep=""), ylab = paste(genes[1],", ",gpaxisnames[gpb],sep=""), pch = 1, col = 'black', sub = plot.subtitle)
     }
-    
+
   } else if (skin == 'disc') {
 
     if(length(genes) == 1 & length(geneticProfiles) == 1) {
@@ -177,7 +181,7 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
       #discrete vs discrete
       return(errormsg('discrete vs. discrete data not implemented'))
     }
-    
+
   } else if (skin =='disc_cont') {
 
     # skin only valid for two genetic profiles
@@ -187,11 +191,11 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
       # skin assumes that first genetic profile is discret
       gp.disc = geneticProfiles[1] # b
       gp.cont = geneticProfiles[2] # a
-          
+
       boxplot(df[,gp.cont] ~ df[,gp.disc], outpch = NA, main = '', xlab = paste(genes[1],", ",gpaxisnames[gp.disc],sep=""), ylab = paste(genes[1],", ",gpaxisnames[gp.cont],sep=""), border = 'gray', sub = plot.subtitle)
       stripchart(df[,gp.cont] ~ df[,gp.disc],vertical = TRUE, add = TRUE, method = 'jitter', pch = 1, col = 'black')
     }
-    
+
   } else if (skin == 'cna_mrna_mut') {
 
     # skin uses parameters
@@ -211,7 +215,7 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
         df = rbind(df,df.norm2)
       }
     }
-    
+
     # create boxplot
     df.nona = df[apply(df, 1, function(x) {!any(is.na(x))}),]
     ylim=range(df.nona[,geneticProfiles[2]],na.rm=TRUE)
@@ -227,7 +231,7 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
     axis(1,at=seq(1,length(labels.inuse)),labels=names(labels)[match(labels.inuse,labels)],cex.axis=0.8)
     axis(2,cex.axis=0.8,las=2)
     # box()
-    
+
     # manually jitter data
 
     # order data by CNA status
@@ -245,7 +249,7 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
     }))
     xy=as.data.frame(xy)
     colnames(xy) = c('MRNA','JITTER')
-    
+
     # Initialize plotting features
     nonmut.pch = 4
     N=nrow(xy)
@@ -254,7 +258,7 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
     col=rep("royalblue",N)
     bg=rep(NA,N)
 
-    # fetch mutation data for color coding    
+    # fetch mutation data for color coding
     if (length(skin.col.gp == 1)) {
       df.mut = getProfileData(x, genes, skin.col.gp, caseList, cases, caseIdsKey)
       if (nrow(df.mut) == 0) { return(errormsg(paste('empty data frame returned :\n',colnames(df.mut)[1]))) }
@@ -264,7 +268,7 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
       mut=which(!is.na(df.mut))
       if(length(mut)>0) {
         # default mutation
-        col[mut]="red3" 
+        col[mut]="red3"
         bg[mut]="goldenrod"
         pch[mut]=21
         mt=list()
@@ -292,18 +296,18 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
     points(xy$JITTER[!xy.mut],xy$MRNA[!xy.mut],pch=pch[!xy.mut],cex=cex[!xy.mut],col=col[!xy.mut],bg=bg[!xy.mut])
     points(xy$JITTER[xy.mut],xy$MRNA[xy.mut],pch=pch[xy.mut],cex=cex[xy.mut],col=col[xy.mut],bg=bg[xy.mut])
     box()
-    
+
   } else if (skin == 'meth_mrna_cna_mut' | skin == 'cna_mut') {
 
     # these skins use parameters
     # * skin.col.gp = (cna,mut) [optional]
     # * skin.normals = normal_case_set [optional]
     # [meth_mrna_cna_mut] forces x axis range to [0,1.05]
-        
+
     # fetch cna and mut data for color coding
     pch=rep(1,nrow(df))
     col=rep("black",nrow(df))
-    
+
     if (length(skin.col.gp) == 2) { # color by both CNA and mutation
         df.col = getProfileData(x, genes, skin.col.gp, caseList, cases, caseIdsKey)
       if (nrow(df.col) == 0) { return(errormsg(paste('empty data frame returned :\n',colnames(df.col)[1]))) }
@@ -327,7 +331,7 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
       col[cna==1]="hotpink"
       col[cna==2]="red3"
     }
-    
+
     # fetch optional normal methylation and mRNA data
     if (skin.normals != '') {
       df.norm = getProfileData(x, genes, geneticProfiles, skin.normals)
@@ -349,9 +353,9 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
     else if (legend.pos == 'topleft') {
       xlim = c(min(xlim) - (max(xlim)-min(xlim))*0.15,max(xlim))
     }
-      
+
     if (skin == 'meth_mrna_cna_mut') {
-      # force x axis range to [0,1.05] 
+      # force x axis range to [0,1.05]
       xlim = c(0,1.05)
     }
 
@@ -370,26 +374,26 @@ setMethodS3("plot","CGDS", function(x, cancerStudy, genes, geneticProfiles, case
            c("Homdel","Hetloss","Diploid","Gain","Amp","Mutated","Normal"),
            col=c('darkblue','deepskyblue','black','hotpink','red','orange','black'),
            pch=c(1,1,1,1,1,20,20),cex=0.85,pt.cex=1.0
-           )    
+           )
 
   } else {
     return(errormsg(paste("unkown skin:",skin)))
   }
 
   return(TRUE)
-  
+
 })
 
 setMethodS3("test","CGDS", function(x, ...) {
   checkEq = function(a,b) { if (identical(a,b)) "OK\n" else "FAILED!\n" }
   checkGrt = function(a,b) { if (a > b) "OK\n" else "FAILED!\n" }
   checkTrue = function(a) { if (a) "OK\n" else "FAILED!\n" }
-  
+
   cancerstudies = getCancerStudies(x)
   cat('getCancerStudies... ',
       checkEq(colnames(cancerstudies),c("cancer_study_id","name","description")))
   ct = cancerstudies[2,1] # should be row 1 instead ...
-  
+
   cat('getCaseLists (1/2) ... ',
       checkEq(colnames(getCaseLists(x,ct)),
               c("case_list_id","case_list_name",
@@ -397,7 +401,7 @@ setMethodS3("test","CGDS", function(x, ...) {
   cat('getCaseLists (2/2) ... ',
       checkEq(colnames(getCaseLists(x,'xxx')),
               'Error..Problem.when.identifying.a.cancer.study.for.the.request.'))
-  
+
   cat('getGeneticProfiles (1/2) ... ',
       checkEq(colnames(getGeneticProfiles(x,ct)),
               c("genetic_profile_id","genetic_profile_name","genetic_profile_description",
@@ -405,12 +409,12 @@ setMethodS3("test","CGDS", function(x, ...) {
   cat('getGeneticProfiles (2/2) ... ',
       checkEq(colnames(getGeneticProfiles(x,'xxx')),
               'Error..Problem.when.identifying.a.cancer.study.for.the.request.'))
-  
+
   # clinical data
   # check colnames
   cat('getClinicalData (1/1) ... ',
       checkTrue("DFS_MONTHS" %in% colnames(getClinicalData(x,'gbm_tcga_all'))))
-  
+
   # check one gene, one profile
   cat('getProfileData (1/6) ... ',
       checkEq(colnames(getProfileData(x,'NF1','gbm_tcga_mrna','gbm_tcga_all')),
