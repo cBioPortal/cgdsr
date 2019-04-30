@@ -8,7 +8,7 @@
 \usepackage{url}
 
 \title{The CGDS-R library}
-\author{Anders Jacobsen}
+\author{Anders Jacobsen and Augustin Luna}
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
@@ -85,6 +85,14 @@ returned from the CGDS connection object using the \texttt{test} function:
 test(mycgds) 
 @
 
+A verbose option can be set for the CGDS connection object. This will cause function calls that retrieve data from cBioPortal to additionally display the programming interface URL to be displayed. This is useful for debugging and troubleshooting issues with the package. 
+
+<<>>=
+# Set verbose flag
+setVerbose(mycgds, TRUE)
+@
+
+
 \subsection{\texttt{getCancerStudies()} : Retrieve a set of available cancer studies}
 
 Having created a CGDS connection object, we can now retrieve a data
@@ -148,11 +156,10 @@ cancer study:
 getProfileData(mycgds, "NF1", c("gbm_tcga_gistic","gbm_tcga_mrna"), "gbm_tcga_all")[c(1:5),]
 @
 
-We are here only showing the first five rows of the data frame. In the next example, we are
-retrieving mRNA expression data for the MDM2 and MDM4 genes:
+We are here only showing the first five rows of the data frame. Entries with NaN indicate missing values.  In the next example, we are retrieving mRNA expression data for the MDM2 and MDM4 genes:
 
 <<>>=
-getProfileData(mycgds, c("MDM2","MDM4"), "gbm_tcga_mrna", "gbm_tcga_all")[c(1:5),]
+getProfileData(mycgds, c("MDM2","MDM4"), "gbm_tcga_mrna", "gbm_tcga_all")[c(25:30),]
 @
 
 We are again only showing the first five rows of the data frame.
@@ -222,7 +229,8 @@ plot(mycgds, "gbm_tcga", "NF1", c("gbm_tcga_gistic","gbm_tcga_mrna"), "gbm_tcga_
 In this example, we evaluate the relationship of MDM2 and MDM4
 expression levels in glioblastoma. mRNA expression levels of MDM2 and MDM4 have been 
 median adjusted on the gene level (by globally subtracting the median expression
-level of the individual gene across all samples).
+level of the individual gene across all samples). Samples with "NaN" do not have
+measurements.
 
 \begin{center}
 <<MDM2plot1,fig=TRUE,echo=TRUE>>=

@@ -11,9 +11,14 @@ setConstructorS3("CGDS", function(url='',verbose=FALSE,ploterrormsg='') {
          .ploterrormsg='')
 })
 
-setMethodS3("processURL","CGDS", private=TRUE, function(x, url, ...) {
+setMethodS3("processURL","CGDS", private=TRUE, function(x, url, force.comment.char.blank=FALSE, ...) {
   if (x$.verbose) cat(url,"\n")
-  df = read.table(url, skip=0, header=TRUE, as.is=TRUE, sep="\t",quote='',comment.char='')
+  
+  if(force.comment.char.blank) {
+    df = read.table(url, skip=0, header=TRUE, as.is=TRUE, sep="\t",quote='',comment.char='')
+  } else {
+    df = read.table(url, skip=0, header=TRUE, as.is=TRUE, sep="\t",quote='')
+  }
 })
 
 setMethodS3("setPlotErrorMsg","CGDS", function(x, msg, ...) {
