@@ -1,6 +1,7 @@
 # ---- IMPORTS ----
 # Packages to be imported
-import("R.methodsS3","R.oo")
+importFrom("R.methodsS3", "setMethodS3")
+importFrom("R.oo", "setConstructorS3", "extend", "Object")
 
 # Object that must exported explicitly
 
