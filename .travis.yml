@@ -1,0 +1,10 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+language: r
+
+cache: packages
+
+# Need this if also using covr to get code coverage
+r_github_packages:
+  - jimhester/covr
+after_success:
+  - Rscript -e 'covr::codecov()'
