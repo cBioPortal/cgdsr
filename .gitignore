@@ -3,3 +3,6 @@
 .RData
 vignettes/*.pdf
 vignettes/*.tex
+vignettes/*.aux
+vignettes/*.log
+vignettes/*.toc
