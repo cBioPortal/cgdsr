@@ -1,18 +1,18 @@
 Package: cgdsr
 Type: Package
 Title: R-Based API for Accessing the MSKCC Cancer Genomics Data Server (CGDS)
-Version: 1.2.11
-Date: 2018-04-29
-Author: Anders Jacobsen <jacobsen@cbio.mskcc.org>, cBioPortal Questions <cbioportal@googlegroups.com>
-Maintainer: Augustin Luna <lunaa@cbio.mskcc.org>
+Version: 1.3.0
+Date: 2019-06-10
+Author: Anders Jacobsen <jacobsen@cbio.mskcc.org>, Augustin Luna <lunaa@cbio.mskcc.org>
+Maintainer: cBioPortal Questions <cbioportal@googlegroups.com>
 Description: Provides a basic set of R functions for querying the Cancer
   Genomics Data Server (CGDS), hosted by the Computational Biology Center at
   Memorial-Sloan-Kettering Cancer Center (MSKCC) at <www.cbioportal.org>.
 License: LGPL-3
 LazyLoad: yes
 URL: https://github.com/cBioPortal/cgdsr
-Depends: R (>= 2.12.0)
-Imports: R.oo, R.methodsS3
+Depends: R (>= 3.1)
+Imports: R.oo, R.methodsS3, httr
 Suggests: testthat
 NeedsCompilation: no
 Repository: CRAN
