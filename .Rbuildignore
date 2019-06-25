@@ -5,3 +5,4 @@ README.md
 jenkins_build.R
 vignettes/*.pdf
 vignettes/*.tex
+.travis.yml
