@@ -82,21 +82,42 @@ returned from the CGDS connection object using the \texttt{test} function:
 
 <<>>=
 # Test the CGDS endpoint URL using a few simple API tests
-test(mycgds) 
+test(mycgds)
 @
 
-A verbose option can be set for the CGDS connection object. This will cause function calls that retrieve data from cBioPortal to additionally display the programming interface URL to be displayed. This is useful for debugging and troubleshooting issues with the package. 
+Note that the tests may not work if you are connecting to a portal other
+than the one in the above example. The tests can fail if the portal
+instance does not contain the data that is being tested against, or
+if you do have have authorization to access the data that is being tested against.
+
+A verbose option can be set for the CGDS connection object. This will cause
+function calls that retrieve data from cBioPortal to additionally display the
+programming interface URL to be displayed. This is useful for debugging and
+troubleshooting issues with the package.
 
 <<>>=
 # Set verbose flag
 setVerbose(mycgds, TRUE)
 @
 
+[Optional] A data access token can be optionally attached to a CGDS connection object
+when it is created. This allows you to connect to cBioPortal instances that require
+authentication. Data access tokens (when this feature is enabled) can be created
+through the cbioportal website. If you attempt to access data that you are not
+authorized to access you will get an \texttt{Unauthorized (HTTP 401)} error.
+Note the public portal at http://www.cbioportal.org/ does not require authentication
+so you do not need a token to connect to it.
+
+<<>>=
+# Connect to a portal instance that requires authetication
+mysecurecgds = CGDS("https://cbioportal.mskcc.org/",
+                    token="fd0522cb-7972-40d0-9d83-cb4c14e8a337")
+@
 
 \subsection{\texttt{getCancerStudies()} : Retrieve a set of available cancer studies}
 
 Having created a CGDS connection object, we can now retrieve a data
-frame with available cancer studies using the \texttt{getCancerStudies} function: 
+frame with available cancer studies using the \texttt{getCancerStudies} function:
 
 <<>>=
 # Get list of cancer studies at server
@@ -128,7 +149,7 @@ pages for a more extended specification of the arguments and output.
 This function queries the CGDS API and returns available case lists
 for a specific cancer study. For example, within a particular study, only
 some cases may have sequence data, and another subset of cases may
-have been sequenced and treated with a specific therapeutic protocol.  Multiple 
+have been sequenced and treated with a specific therapeutic protocol.  Multiple
 case lists may be associated with each cancer study, and this method
 enables you to retrieve meta-data regarding all of these case
 lists. Below we list the current case lists for the TCGA glioblastoma
@@ -203,7 +224,7 @@ As a simple example, we will generate a plot of the association between
 copy number alteration (CNA) status and mRNA expression change for the
 NF1 tumor suprpressor gene in glioblastoma. This plot is very similar
 to Figure 2b in the TCGA research network paper on glioblastoma
-(McLendon et al. 2008). The mRNA expression of NF1 has been 
+(McLendon et al. 2008). The mRNA expression of NF1 has been
 median adjusted on the gene level (by globally subtracting the median expression
 level of NF1 across all samples).
 
@@ -227,7 +248,7 @@ plot(mycgds, "gbm_tcga", "NF1", c("gbm_tcga_gistic","gbm_tcga_mrna"), "gbm_tcga_
 
 \subsection{Example 2: MDM2 and MDM4 mRNA expression levels in glioblastoma}
 In this example, we evaluate the relationship of MDM2 and MDM4
-expression levels in glioblastoma. mRNA expression levels of MDM2 and MDM4 have been 
+expression levels in glioblastoma. mRNA expression levels of MDM2 and MDM4 have been
 median adjusted on the gene level (by globally subtracting the median expression
 level of the individual gene across all samples). Samples with "NaN" do not have
 measurements.
