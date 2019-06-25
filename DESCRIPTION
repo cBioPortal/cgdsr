@@ -4,7 +4,7 @@ Title: R-Based API for Accessing the MSKCC Cancer Genomics Data Server (CGDS)
 Version: 1.3.0
 Date: 2019-06-10
 Author: Anders Jacobsen <jacobsen@cbio.mskcc.org>, Augustin Luna <lunaa@cbio.mskcc.org>
-Maintainer: Benjamin Gross <cgdsr@cbioportal.com>
+Maintainer: Benjamin Gross <cgdsr@cbioportal.org>
 Description: Provides a basic set of R functions for querying the Cancer
   Genomics Data Server (CGDS), hosted by the Computational Biology Center at
   Memorial-Sloan-Kettering Cancer Center (MSKCC) at <www.cbioportal.org>.
