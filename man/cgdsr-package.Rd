@@ -17,7 +17,7 @@ service at the cBio Cancer Genomics Portal,
 \tabular{ll}{
 Package: \tab cgdsr\cr
 Type: \tab Package\cr
-License: \tab GPL\cr
+License: \tab LGPL-3\cr
 LazyLoad: \tab yes\cr
 }
 The Cancer Genomic Data Server (CGDS) web service interface provides
